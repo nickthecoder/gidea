@@ -1,0 +1,77 @@
+<%@ page contentType="text/html; charset=iso-8859-1" %>
+
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
+<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
+<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<tiles:insert page="/resources/plainLayout.jsp" flush="true">
+
+  <tiles:put name="icon" type="string" value="/resources/musicIcon.png" />
+  <tiles:put name="title" type="string" value="Music : ${WEB_FILE.name}" />
+  <tiles:put name="logo" type="string" value="/resources/musicLogo.png" />
+  <tiles:put name="breadcrumbs" value="/musicApp/breadcrumbs.jsp" />
+  <tiles:put name="heading" type="string" value="Music Category : ${WEB_FILE.path}" />
+  <tiles:put name="tabId" value="music" />
+
+
+  <tiles:put name="content" type="string" >
+
+
+    <ww:tabs className="tabs normalTabs">
+      <c:forEach var="category" items="${WEB_FILE.hierarchy.root.subDirectories}">
+        <ww:tab test="${category == WEB_FILE}"><ww:link href="/listMusic.do?path=${category.path}"><c:out value="${category.name}"/></ww:link></ww:tab>
+      </c:forEach>
+    </ww:tabs>
+
+
+    <div class="tabsContainer">
+
+      <!-- Sub-Directories -->
+      <table class="striped">
+        <ww:portion var="rows" items="${WEB_FILE.subDirectories}" portionSize="6" transpose="true" pad="normal">
+          <c:forEach var="row" items="${rows}" varStatus="lineInfo">
+
+            <c:choose>
+              <c:when test="${lineInfo.count % 2 == 0}">
+                <tr class="even">
+              </c:when>
+              <c:otherwise>
+                <tr class="odd">
+              </c:otherwise>
+            </c:choose>
+
+              <c:forEach var="directory" items="${row}">
+                <td width="16%">
+                  <c:if test="${directory != null}" >
+
+                    <ww:linkInfo href="/showMusic.do">
+                      <ww:linkParameter name="path" value="${directory.path}"/>
+                      <ww:link><c:out value="${directory.name}" default="" /></ww:link>
+                    </ww:linkInfo>
+
+                  </c:if>
+                </td>
+              </c:forEach>
+
+            </tr>
+
+          </c:forEach>
+        </ww:portion>
+      </table>
+
+    </div>
+
+    <div class="plainContainer">
+
+      <!-- wiki -->
+      <tiles:insert page="/pinkwino/snippet.jsp" flush="false">
+        <tiles:put name="wikiName" value="music:${WEB_FILE.hierarchy.root.path}"/>
+      </tiles:insert>
+
+    </div>
+
+  </tiles:put>
+</tiles:insert>
+
+

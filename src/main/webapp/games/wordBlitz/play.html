@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+  <title>Word Blitz - A Pub inspired game</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+
+</head>
+
+<body onload="game.adjustPosition( 'boardTopLeft' );game.start();" onresize="game.adjustPosition( 'boardTopLeft' )">
+
+
+<div id="status" class="playing">
+
+  <div class="border" style="width: 500px; margin-left: auto; margin-right: auto;">
+
+    <!-- time -->
+    <div style="float: right;">
+      <img src="images/t.png" alt="t"/>
+      <img src="images/i.png" alt="i"/>
+      <img src="images/m.png" alt="m"/>
+      <img src="images/e.png" alt="e"/><br/>
+      <img id="time_0" src="images/0.png" alt="0"/>
+      <img id="time_1" src="images/0.png" alt="0"/>
+      <img id="time_2" src="images/0.png" alt="0"/>
+      <img id="time_3" src="images/0.png" alt="0"/>
+    </div>
+
+    <!-- score -->
+    <div style="text-align: left;">
+      <img src="images/s.png" alt="s"/>
+      <img src="images/c.png" alt="c"/>
+      <img src="images/o.png" alt="o"/>
+      <img src="images/r.png" alt="r"/>
+      <img src="images/e.png" alt="e"/>
+
+      <br/>
+      <img id="score_0" src="images/0.png" alt="0"/>
+      <img id="score_1" src="images/0.png" alt="0"/>
+      <img id="score_2" src="images/0.png" alt="0"/>
+      <img id="score_3" src="images/0.png" alt="0"/>
+      <img id="score_4" src="images/0.png" alt="0"/>
+    </div>
+
+
+    <br/>
+
+    <!-- placeholder for playing area -->
+    <div class="boardPlaceholder" style="width: 400px; height: 400px; margin-left: auto; margin-right: auto;"><img id="boardTopLeft" alt="boardTopLeft" src="images/transparent.png"/>
+    </div>
+
+    <div style="position: absolute; top: 0px; left: 0px; width: 100%;">
+      <!-- generated board - positioned using absolute positioning -->
+      <script type="text/javascript">
+        parent.game = parent.Game.create( document, 10, 10 );
+        parent.board = parent.game.board;
+
+        game = parent.game;
+        board = parent.board;
+
+        board.generate();
+        board.write();
+      </script>
+    </div>
+
+
+    <div class="whenPlaying">
+
+      <br/>
+      <!-- ok -->
+      <div style="float: right">
+        <a title="Complete Word (same as double clicking the last letter)" href="#" onclick="return parent.game.completeWord()">
+          <img src="images/tick.png" alt="q"/>
+        </a>
+      </div>
+
+      <!-- cancel -->
+      <div style="float: left">
+         <a title="Cancel Word" href="#" onclick="return parent.game.cancelWord()">
+          <img src="images/cross.png" alt="q"/>
+        </a>
+      </div>
+
+      <!-- quit -->
+      <div style="text-align: center;">
+        <a onclick="game.quit();" title="Quit Game, and Return to the Instructions" href="instructions.html">
+        <img src="images/q.png" alt="q"/>
+        <img src="images/u.png" alt="u"/>
+        <img src="images/i.png" alt="i"/>
+        <img src="images/t.png" alt="t"/></a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div style="width: 500px; margin-left: auto; margin-right: auto;">
+
+    <div class="whenGameOver">
+
+      <!-- play (again) -->
+      <div style="text-align: center;">
+        <a href="play.html">
+          <img src="images/p.png" alt="p"/>
+          <img src="images/l.png" alt="l"/>
+          <img src="images/a.png" alt="a"/>
+          <img src="images/y.png" alt="y"/>
+         </a>
+       </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+
+</html>

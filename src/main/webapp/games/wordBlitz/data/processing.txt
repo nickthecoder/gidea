@@ -1,0 +1,29 @@
+grep '^....*$' words.lst > threeOrMore.txt
+sed -e 's/\(.*\)/a("\1");/' threeOrMore.txt > dictionary-plain.js
+
+ 1141  grep '"a' dictionary-plain.js > a.js
+ 1143  grep '"b' dictionary-plain.js > b.js
+ 1144  grep '"c' dictionary-plain.js > c.js
+ 1145  grep '"d' dictionary-plain.js > d.js
+ 1146  grep '"e' dictionary-plain.js > e.js
+ 1147  grep '"f' dictionary-plain.js > f.js
+ 1148  grep '"g' dictionary-plain.js > g.js
+ 1149  grep '"h' dictionary-plain.js > h.js
+ 1150  grep '"i' dictionary-plain.js > i.js
+ 1151  grep '"j' dictionary-plain.js > j.js
+ 1152  grep '"k' dictionary-plain.js > k.js
+ 1153  grep '"l' dictionary-plain.js > l.js
+ 1154  grep '"m' dictionary-plain.js > m.js
+ 1155  grep '"n' dictionary-plain.js > n.js
+ 1156  grep '"o' dictionary-plain.js > o.js
+ 1157  grep '"p' dictionary-plain.js > p.js
+ 1158  grep '"q' dictionary-plain.js > q.js
+ 1159  grep '"r' dictionary-plain.js > r.js
+ 1160  grep '"s' dictionary-plain.js > s.js
+ 1161  grep '"t' dictionary-plain.js > t.js
+ 1162  grep '"u' dictionary-plain.js > u.js
+ 1163  grep '"v' dictionary-plain.js > v.js
+ 1164  grep '"w' dictionary-plain.js > w.js
+ 1165  grep '"x' dictionary-plain.js > x.js
+ 1166  grep '"y' dictionary-plain.js > y.js
+ 1167  grep '"z' dictionary-plain.js > z.js

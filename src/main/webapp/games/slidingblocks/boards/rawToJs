@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#
+# Converts moves which can be cut and pasted from the "Show Moves" link on the web site
+# into javascript code which can be appended to data.js file.
+#
+
+echo "solution = new Solution( board );"
+echo
+
+sed "$1" -e 's/id\([0-9]*\)/solution.addMove("id\1",/' -e 's/ .*-> (//'      -e 's/)/);/'
+

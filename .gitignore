@@ -1,0 +1,9 @@
+*~
+*.class
+.gradle
+.project
+.classpath
+.settings
+build
+bin
+/sourceImages

@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+
+  <title>Playing Area</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+
+</head>
+
+<body onload="parent.setDictionaryLoaded();">
+
+<h1>
+  <img src="images/w.png" alt="w"/><img src="images/o.png" alt="o"/><img src="images/r.png" alt="r"/><img src="images/d.png" alt="d"/><img src="images/blankTile.png" alt=" "/><img src="images/b.png" alt="b"/><img src="images/l.png" alt="l"/><img src="images/i.png" alt="i"/><img src="images/t.png" alt="t"/><img src="images/z.png" alt="z"/>
+</h1>
+
+
+<div style="margin-left: auto; margin-right: auto; width: 600px;">
+
+  <h2>Instructions</h2>
+  <p>
+    Score as many points as possible, by finding words within the grid of letters.
+  </p>
+
+  <p>
+    To spell out a word, click each letter in turn, and then click the last letter once more
+    to complete the word. If the word is spelt correctly, those letters will be removed, and
+    the letters above will fall down to fill the gaps. Words must be at least three letters
+    long.
+  </p>
+
+
+  <h2>Scoring</h2>
+
+  <p>
+    You get more points for words containing tricky letters, such as X, and Q. Also, the longer
+    the word, the more points you get (you get substantially more points for a six letter word
+    than for a pair of three letter words.
+  </p>
+
+  <p>
+    If you remove all of the letters from the grid, you get a big bonus.
+  </p>
+
+  <h2>Wiki Page</h2>
+  <p>
+    I have a <a href="http://nickthecoder.co.uk/pinkwino/view/Word Blitz">Wiki Page</a>
+    devoted to this game, so if you want to leave feedback, go ahead and edit the page!
+  </p>
+
+  <div style="position: relative;">
+    <div id="loadedDiv" style="position: absolute; width: 100%; visibility: hidden; text-align: center;">
+
+      <a href="play.html"><img src="images/p.png" alt="p"/><img src="images/l.png" alt="l"/><img src="images/a.png" alt="a"/><img src="images/y.png" alt="y"/></a>
+
+    </div>
+
+    <div id="loadingDiv" style="position: absolute; width: 100%; visibility: hidden">
+
+      <h2>Loading - Please Wait</h2>
+
+      <p>
+        This game requires a dictionary of english words (there are over 100,000 words), and this takes a while
+        to download. If you don't like waiting around, I suggest you get a good web browser such as
+        <a href="http://www.mozilla.com/firefox/">Firefox</a>, which has <a href="
+        http://www.mozilla.com/firefox/tabs.html">tabbed browsing</a>, so you can surf the web in one
+        tab while you are waiting for the dictionary to download in another.
+      </p>
+
+    </div>
+  </div>
+
+
+</div>
+
+</html>
+

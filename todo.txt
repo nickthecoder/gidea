@@ -1,0 +1,28 @@
+onloadnotifier js error
+
+full size images don't break the layout - instead the white box is outside of the container
+This also means that the folder navigation won't be out wide.
+
+Add ajax (or plain js) to show larger versions from the thumbnail page.
+  Links to Set Default and Full Size from there too.
+  Can use "," and "." or buttons to move forwards/backwards through a directory.
+  So these shortcuts cannot be used to move to the next directory. 
+
+Choose what is the default view - maybe the thumbnail view!
+
+Do music using the same system.
+Delete video - I don't use it anyway.
+Delete Actions.
+Delete model.Preferences
+
+Move some of the styles from root to gidea???
+
+Test an image, and/or a directory with a single quote. The prev/next preview links won't work??  
+
+Installation
+============
+
+Ensure rootwebapp, webwidgets are updated at the same time.
+
+Ensure 3rdParty links don't use home dir version.
+

@@ -1,0 +1,40 @@
+h1 {
+  text-align: center;
+}
+
+body {
+  margin: 40px;
+}
+
+
+.border {
+  background: #0a6a00;
+  padding: 8px;
+}
+
+.boardPlaceholder {
+  background: #dcffd2;
+  padding: 8px;
+}
+
+a img {
+  border: 0px;
+}
+
+.playing .whenPlaying {
+  visibility: visible;
+}
+
+.gameOver .whenPlaying {
+  visibility: hidden;
+}
+
+
+.playing .whenGameOver {
+  visibility: hidden;
+}
+
+.gameOver .whenGameOver {
+  visibility: visible;
+}
+

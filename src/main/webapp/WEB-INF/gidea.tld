@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<taglib>
+
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.2</jspversion>
+  <shortname>Application Tag Library</shortname>
+  <uri>http://nickthecoder.co.uk/gidea</uri>
+  <info>
+    This tag library contains functionality specific to my gidea web application.
+  </info>
+
+
+  <tag>
+
+    <name>webImage</name>
+
+    <tagclass>uk.co.nickthecoder.gidea.tag.WebImageTag</tagclass>
+
+    <info>
+      Creates a url of a web file, with an optional replacement if the file
+      does not exist.
+    </info>
+
+    <attribute>
+      <name>directory</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>gidea.model.WebFile</type>
+    </attribute>
+
+    <attribute>
+      <name>file</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>notFoundPath</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+
+
+  <tag>
+    <name>webPath</name>
+
+    <tagclass>uk.co.nickthecoder.gidea.tag.WebPathTag</tagclass>
+
+    <info>
+      Breaks a path into is consituant parts, allowing any of the parent
+      directories to be clicked.
+    </info>
+
+    <attribute>
+      <name>path</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>action</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <name>size</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+
+  <tag>
+    <name>formattedName</name>
+
+    <tagclass>uk.co.nickthecoder.gidea.tag.FormattedNameTag</tagclass>
+
+    <info>
+      Used by the music application to nicely render track titles with extra info
+      between square brackets.
+    </info>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+  </tag>
+
+
+</taglib>
+
+

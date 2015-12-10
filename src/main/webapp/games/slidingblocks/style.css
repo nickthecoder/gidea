@@ -1,0 +1,51 @@
+
+.instructions {
+}
+
+#pieces {
+  position: relative;
+}
+
+.piece {
+  position: absolute;
+  visibility: hidden;
+}
+
+#controls {
+  text-align: center;
+  padding: 16px 0;
+}
+
+#glass {
+  position: absolute;
+}
+#glass img {
+  visibility: hidden;
+}
+
+#playArea {
+  float: left;
+  padding: 16px;
+}
+
+#moves {
+  clear: both;
+  padding: 1em 0;
+}
+
+.board {
+}
+
+.clear {
+  clear: both;
+}
+
+table.pieceKey {
+  font-size: 16pt;
+}
+
+.pieceKey td {
+  text-align: center;
+  vertical-align: bottom;
+}
+
