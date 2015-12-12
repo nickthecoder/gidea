@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import uk.co.nickthecoder.webwidgets.util.TagUtil;
 
 public class WebFile
@@ -25,6 +26,11 @@ public class WebFile
 
     public WebFile(Hierarchy hierarchy, String logicalPath)
     {
+        // We cannot allow "up directory", as this could expose the entire file system to the outside world.
+        if ( logicalPath.contains( ".." ) ) {
+            throw new RuntimeException( "Bad logical path : " + logicalPath );
+        }
+
         _hierarchy = hierarchy;
         _logicalPath = logicalPath;
         if (_logicalPath == null) {

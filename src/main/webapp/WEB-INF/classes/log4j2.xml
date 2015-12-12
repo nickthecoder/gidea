@@ -9,7 +9,6 @@
     <Root level="warn">
       <AppenderRef ref="Console"/>
     </Root>  
-    <Logger name="uk.co.nickthecoder.gidea.servlet.CrosswordSolverServlet" level="TRACE"/>
 
   </Loggers>
 </Configuration>

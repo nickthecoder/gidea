@@ -1,5 +1,2 @@
-View a single image
-    Use /images url?
-
 Re-implement the wiki integration.
     Sliding blocks, photos, music
