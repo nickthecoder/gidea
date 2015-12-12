@@ -27,7 +27,7 @@ public class WebFile
     public WebFile(Hierarchy hierarchy, String logicalPath)
     {
         // We cannot allow "up directory", as this could expose the entire file system to the outside world.
-        if ( logicalPath.contains( ".." ) ) {
+        if ( logicalPath.contains( "/.." ) ) {
             throw new RuntimeException( "Bad logical path : " + logicalPath );
         }
 
