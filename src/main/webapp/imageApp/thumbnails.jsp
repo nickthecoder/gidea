@@ -9,18 +9,19 @@
 <tiles:insert template="imageTemplate.jsp">
 
   <tiles:put name="images" type="string">
-  <div class="images">
+  <div class="thumbnails">
 
     <c:forEach var="leaf" items="${subset}">
-      <ww:linkInfo href="/image${leaf.encodedPath}">
-            
-        <div class="thumbnailContainer"><div class="thumbnailWrapper"><div class="thumbnailExtra">
-            <ww:link><img class="thumbnail" alt="" src="http://nickthecoder.co.uk/${leaf.thumbnail.resourceLocation}"/></ww:link>
-            <br/>
+      <ww:linkInfo href="/images${leaf.encodedPath}">
 
+        <div class="thumbnailBox">
+          <div class="thumbnailContainer"><div class="thumbnailWrapper">
+            <ww:link><img class="thumbnail" alt="" src="${leaf.thumbnail.url}"/></ww:link>
+          </div></div>
+          <div class="thumbnailLabel">
             <ww:link><c:out value="${leaf.name}" /></ww:link>
-        </div></div></div>
-
+          </div>
+        </div>
       </ww:linkInfo>
   
     </c:forEach>

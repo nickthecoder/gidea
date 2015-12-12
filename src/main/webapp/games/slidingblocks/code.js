@@ -158,7 +158,7 @@ Board.prototype.toString = function()
 
 
 
-Board.prototype.generatePieceKey = function( doc )
+Board.prototype.generatePieceKeyOLD = function( doc )
 {
   if ( doc == null ) {
     doc = this.doc;
@@ -185,6 +185,37 @@ Board.prototype.generatePieceKey = function( doc )
   html += '</tr>';
   html +='</table>';
 
+  return html;
+}
+
+Board.prototype.generatePieceKey = function( doc )
+{
+  if ( doc == null ) {
+    doc = this.doc;
+  }
+
+  var i;
+
+  var html = "";
+
+  for ( i = 0; i < this.pieces.length; i ++ ) {
+  
+    var piece = this.pieces[ i ].piece;
+    if ( piece.image != null ) {
+      html += '<div class="thumbnailBox">';
+      html += '<div class="thumbnailContainer"><div class="thumbnailWrapper">';
+
+      html += ' <img alt="' + this.pieces[ i ].id +'" src="' + this.baseUrl + piece.image + '"/>';
+  
+      html += '</div></div>';
+      html += '<div class="thumbnailLabel">';
+
+      html += this.pieces[ i ].id;
+
+      html += '</div>';
+      html += '</div>';
+    }
+  }
   return html;
 }
 

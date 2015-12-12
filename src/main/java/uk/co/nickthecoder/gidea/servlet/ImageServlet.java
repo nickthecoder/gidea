@@ -2,34 +2,41 @@ package uk.co.nickthecoder.gidea.servlet;
 
 import java.io.File;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import uk.co.nickthecoder.gidea.model.Hierarchy;
+import uk.co.nickthecoder.gidea.model.WebDirectory;
 import uk.co.nickthecoder.gidea.model.WebFile;
 import uk.co.nickthecoder.gidea.model.WebImage;
-import uk.co.nickthecoder.gidea.model.WebImageCreator;
 
 public class ImageServlet extends WebFileServlet
 {
 
     private static final long serialVersionUID = 1L;
 
-    private static String HIERARCHY_NAME = "image";
-
     private static File ROOT_DIRECTORY = new File("/gidea/images");
 
-    private static String ROOT_PATH = "/images";
+    /**
+     * Used during testing, because the album covers are not available from the
+     * locally running jetty web server.
+     */
+    private static String TESTING_ROOT_URL = "http://giddyserv/images";
 
-    public ImageServlet()
-    {
-        super();
-    }
+    /**
+     * Urls for the images will be absolute urls without a server name.
+     */
+    private static String ROOT_URL = "/images";
 
-    protected Hierarchy getProtectedHierarchy(ServletContext context, String contextPath)
+    private static String[] imageExtensions = { "png", "jpg", "jpeg" };
+    
+    protected Hierarchy getProtectedHierarchy(HttpServletRequest request)
     {
-        return new Hierarchy(HIERARCHY_NAME, new WebImageCreator(), ROOT_DIRECTORY, ROOT_PATH);
+        // ServletContext context = getServletConfig().getServletContext();
+        if (request.getServerName().equals( "localhost" )) {
+            return new ImageHierarchy( ROOT_DIRECTORY, TESTING_ROOT_URL, imageExtensions );    
+        }
+        return new ImageHierarchy( ROOT_DIRECTORY, ROOT_URL, imageExtensions );
     }
 
     protected String getViewType(HttpServletRequest request)
@@ -37,9 +44,9 @@ public class ImageServlet extends WebFileServlet
         String size = request.getParameter("size");
 
         try {
-            String path = getPath(request);
-            WebFile webFile = getHierarchy(request).createWebFile(path);
-            if (webFile instanceof WebImage) {
+            String logicalPath = getPath(request);
+            WebFile webFile = getHierarchy(request).createWebFile(logicalPath);
+            if (! (webFile instanceof WebDirectory)) {
                 return "image";
             }
         } catch (ServletException e) {
@@ -54,4 +61,16 @@ public class ImageServlet extends WebFileServlet
 
     }
 
+    public class ImageHierarchy extends Hierarchy
+    {
+        public ImageHierarchy(File rootDirectory, String resourceLocation, String[] fileExtensions)
+        {
+            super(rootDirectory, resourceLocation, fileExtensions);
+        }
+
+        protected WebFile newWebFile(String logicalPath)
+        {
+            return new WebImage(this, logicalPath);
+        }
+    }
 }

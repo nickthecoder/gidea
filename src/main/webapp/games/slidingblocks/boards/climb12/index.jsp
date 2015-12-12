@@ -1,7 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
-<tiles:insert template="/games/slidingblocks/playLayout.jsp" flush="true">
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+
+<tiles:insert template="/games/slidingblocks/playLayout.jsp">
 
   <tiles:put name="name" type="string" value="climb12"/>
   <tiles:put name="title" type="string" value="Climb 12"/>

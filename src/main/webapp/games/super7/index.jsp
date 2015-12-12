@@ -1,25 +1,20 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
-<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
-<tiles:insert template="/resources/layouts/columnLayout.jsp" flush="true">
+<tiles:insert template="/templates/ntc/layout.jsp" flush="false">
 
   <tiles:put name="title" type="string" value="Super 7" />
-  <tiles:put name="tab" value="games" />
-  <tiles:put name="breadcrumbs">
-    <tiles:insert template="/games/breadcrumbs.jsp" />
-  </tiles:put>
 
   <tiles:put name="extraHead" type="string">
     <ww:script src="code.js"/>
+    <style>
+table, tr, td { border: 0; margin: 0; padding: 0; }
+    </style>
   </tiles:put>
 
 
-  <tiles:put name="main" type="string" >
-
+  <tiles:put name="content" type="string" >
 
     <table>
       <tr>
@@ -164,42 +159,6 @@ Roll Dice
     The winner is the first player to get a line of three
     <i>boxes</i>, or get control of 5 out of the 9 boxes.
     </p>
-
-
-    <h3>Browser Compatibility</h3>
-
-    The game was developed using Galeon 1.2.7 and Mozilla 1.2.1 under
-    GNU/Linux. The game is playable with Internet Explorer versions
-    5 and 6, however, IE 5 and 6 are broken with regard to png images.
-    It does not render them correctly - they appear as solid images,
-    whereas they <i>should</i> appear partially transparent. The game
-    is still playable under IE, but doesn't look as nice.
-    It could be made to work by using gifs instead of png, however I
-    am a Free Software advocate, and will not pollute my code with
-    closed standards such as gif. In the long run, it is better to
-    embrace open standards such as png, and encourage others to use
-    open standards, rather than succumb to closed / proprietary code.
-    Microsoft (the bad guys) will not bother supporting the good guys'
-    stuff (png images), unless Microsoft customers demand it.
-    Microsoft customers will not demand support for png if all
-    developers <i>cave in to MS pressure</i>, and use gifs.
-    Use the best, use
-    <a href="http://www.fsf.org/philosophy/philosophy.html">Free Software</a>.
-    <br><br>
-    Here's a comparison of how browsers render the images. Notice how
-    the counters and the smaller, black numbers do not block the image
-    of the large purple "7" when rendered with Mozilla.
-    <table align=center>
-      <tr>
-        <td align=center><img src="images/ie.png"></td>
-        <td align=center><img src="images/galeon.png"></td>
-      </tr>
-      <tr>
-        <td align=center>Internet Explorer</td>
-        <td align=center>Galeon / Mozilla</td>
-      </tr>
-    </table>
-
 
   </tiles:put>
 </tiles:insert>

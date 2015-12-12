@@ -1,105 +1,50 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
-<%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
+<%@ taglib uri="http://nickthecoder.co.uk/gidea" prefix="g" %>
 
-<tiles:insert template="/resources/layouts/columnLayout.jsp" flush="true">
+<tiles:insert template="musicTemplate.jsp">
 
   <tiles:put name="title" type="string" value="${WEB_FILE.name}" />
-  <tiles:put name="breadcrumbs">
-    <tiles:insert template="/musicApp/breadcrumbs.jsp" />
-  </tiles:put>
-  <tiles:put name="tab" value="music" />
-  
 
-  <tiles:put name="main" type="string" >
+  <tiles:put name="music" type="string" >
 
-    <h1>
-      <ww:linkInfo href="/showMusic.do">
-        <ww:linkParameter name="path" value="${WEB_FILE.path}"/>
-        <ww:link><c:out value="${WEB_FILE.name}"/></ww:link>
-      </ww:linkInfo>
-    </h1>
+    <div class="tools">
+        <ww:local var="isLocal"/>
+        <c:if test="${isLocal}">
+          <a id="nautilus" title="Open Nautilus ( o )" href="music:nautilus ${WEB_FILE.encodedFile}"><img alt="O" src="<ww:contextPath/>/templates/ntc/files.png" /></a>
+        </c:if>
+    </div>
+    
+    <h1><c:out value="${WEB_FILE.name}"/></h1>
 
     <!-- Sub-Directories -->
-    <c:forEach var="directory" items="${WEB_FILE.subDirectories}">
+    <c:forEach var="album" items="${WEB_FILE.subDirectories}">
 
-      <h2>
-        <ww:linkInfo href="/showMusic.do">
-          <ww:linkParameter name="path" value="${directory.path}"/>
-          <ww:link><c:out value="${directory.name}"/></ww:link>
-        </ww:linkInfo>
-      </h2>
-      <div class="headingTools2">
-        <div class="hMenu2">
-          <ul>
-            <li><a href="music:nautilus /gidea/music/categories/<c:out value="${directory.path}"/>">nautilus</a></li>
-            <li><a href="music:burn /gidea/music/categories/<c:out value="${directory.path}"/>">burn</a></li>
-            <li><ww:linkInfo href="/showAlbumCover.do">
-              <ww:linkParameter name="path" value="${directory.path}"/>
-              <ww:link>cover</ww:link>
-            </ww:linkInfo></li>
-          </ul>
-        </div>
+      <h2><ww:link href="/music${album.path}"><c:out value="${album.name}"/></ww:link></h2>
+
+      <!-- Cover -->
+      <div class="albumCover">
+        <ww:link title="Click to Play" href="/playMusic${album.path}"><img
+            alt="cover" src="${album.url}/.meta/cover_400.jpg"
+        /></ww:link>
       </div>
 
-      <ww:edges className="whiteBox">
-
-        <!-- Cover -->
-        <div class="gidea_cover">
-          <ww:linkInfo href="/playMusic.do">
-            <ww:linkParameter name="path" value="${directory.path}"/>
-            <ww:link title="cover" ><img
-              alt="cover"
-              src='<app:webImage directory="${directory}" file=".meta/cover_400.jpg" notFoundPath="/musicApp/noImage400x400.png" />'
-            /></ww:link>
-          </ww:linkInfo>
-        </div>
-
-        <!-- Track Listing -->
-        <div class="gidea_trackListing">
+      <!-- Track Listing -->
+      <div class="trackListing">
           <ol>
-            <c:forEach var="track" items="${directory.leaves}" >
+              <c:forEach var="track" items="${album.leaves}" >
               <li>
-                <a title="Queue Track" href="music:queue /gidea/music/categories/<c:out value="${track.path}"/>"><app:formattedName name="${track.strippedName}" /></a>
+                    <a title="Queue Track" href="music:queue /gidea/music/categories<c:out value="${track.path}"/>"><g:formattedName name="${track.baseName}" /></a>
               </li>
-            </c:forEach>
+              </c:forEach>
           </ol>
-
-          <br/>
-
-          <div style="text-align: center;">
-            [ <a href="music:prev">prev</a> ] &nbsp;
-            [ <a href="music:pause">pause</a> ] &nbsp;
-            [ <a href="music:unpause">play</a> ] &nbsp;
-            [ <a href="music:next">next</a> ] &nbsp;
-          </div>
-
-        </div>
-
-        <div style="clear: both"></div>
-
-        
-        <!-- wiki -->
-        <tiles:insert template="/pinkwino/snippet.jsp" flush="false">
-          <tiles:put name="wikiNamespace" value="music"/>
-          <tiles:put name="wikiTitle" value="${directory.path}"/>
-          <tiles:put name="hide" value="true"/>
-        </tiles:insert>
-  
-
-      </ww:edges>
+    
+      </div>
 
     </c:forEach>
-
-    <!-- wiki -->
-    <tiles:insert template="/pinkwino/snippet.jsp" flush="false">
-      <tiles:put name="wikiNamespace" value="music"/>
-      <tiles:put name="wikiTitle" value="${WEB_FILE.path}"/>
-      <tiles:put name="hide" value="false"/>
-    </tiles:insert>
 
   </tiles:put>
 

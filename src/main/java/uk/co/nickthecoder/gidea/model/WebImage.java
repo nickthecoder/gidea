@@ -14,6 +14,7 @@ import uk.co.nickthecoder.gidea.util.ResizeImage;
 
 public class WebImage extends WebFile
 {
+    protected static Logger _logger = LogManager.getLogger(WebImage.class);
 
     public static final String QUICK_DIRECTORY = ".quick";
 
@@ -24,8 +25,6 @@ public class WebImage extends WebFile
     public static final int QUICK_WIDTH = 640;
 
     public static final int QUICK_HEIGHT = 480;
-
-    protected static Logger _logger = LogManager.getLogger(WebImage.class);
 
     private int _width = -1;
 
@@ -47,16 +46,6 @@ public class WebImage extends WebFile
         super(hierarchy, path);
     }
 
-    public boolean isFirst()
-    {
-        return this.equals(getParent().getLeafList().get(0));
-    }
-
-    public boolean isLast()
-    {
-        return this.equals(getParent().getLeafList().get(getParent().getLeafList().size() - 1));
-    }
-
     /**
      * Returns the name of the thumbnail, this will depend on the type of image.
      * If it is a jpg, then it is the same name as the file. Otherwise it is the
@@ -74,14 +63,14 @@ public class WebImage extends WebFile
     public WebFile getThumbnail()
     {
         WebFile thumbnail = getHierarchy().createWebFile(
-                        getParent().getPath() + THUMBNAIL_DIRECTORY + "/" + getThumbnailName());
+                        getParent().getPath() + "/" + THUMBNAIL_DIRECTORY + "/" + getThumbnailName());
 
         return thumbnail;
     }
 
     public WebFile getQuickImage()
     {
-        WebFile quick = getHierarchy().createWebFile(getParent().getPath() + QUICK_DIRECTORY + "/" + getName());
+        WebFile quick = getHierarchy().createWebFile(getParent().getPath() + "/" + QUICK_DIRECTORY + "/" + getName());
         if (quick.getFile().exists()) {
             return quick;
         } else {

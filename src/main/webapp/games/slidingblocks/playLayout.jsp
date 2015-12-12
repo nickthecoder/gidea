@@ -1,36 +1,31 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
-<%@ taglib uri="/WEB-INF/webwidgets.tld" prefix="ww" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 
 <tiles:importAttribute name="title" ignore="true"/>
 <tiles:importAttribute name="name" ignore="true"/>
 <tiles:importAttribute name="instructions" ignore="true"/>
 
-<tiles:insert template="/resources/layouts/columnLayout.jsp" flush="true">
+<tiles:insert template="/templates/ntc/layout.jsp" flush="false">
 
   <tiles:put name="extraHead" type="string">
+    <ww:styleSheet href="/templates/ntc/gidea.css" />
     <ww:styleSheet href="/games/slidingblocks/style.css" />
-    <ww:script src="/ww_resources/ww_misc.js"/>
-    <ww:script src="/ww_resources/ww_eventNotifier.js"/>
+    <ww:script src="/templates/ntc/webwidgets-min.js"/>
     <ww:script src="/games/slidingblocks/code.js"/>
     <ww:script src="data.js"/>
   </tiles:put>
 
   <tiles:put name="tab" type="string" value="games"/>
 
-  <tiles:put name="breadcrumbs">
-    <tiles:insert template="/games/breadcrumbs.jsp" />
-  </tiles:put>
-
   <tiles:put name="title" type="string">
     Sliding Block Puzzle : ${title}
   </tiles:put>
 
-
-  <tiles:put name="main" type="string" >
+  <tiles:put name="content" type="string" >
 
     <script>
-      ww_onLoadAdd( function() {
+      window.addEventListener( "load", function() {
         board.generate();
         board.positionPieces();
       } );
@@ -60,13 +55,6 @@
     </div>
 
     <div class="clear"></div>
-
-    <!-- wiki -->
-    <c:if test="${! empty name}">
-      <tiles:insert template="/pinkwino/snippet.jsp" flush="false">
-        <tiles:put name="wikiName" value="games:${name}"/>
-      </tiles:insert>
-    </c:if>
 
     <div id="moves">
     </div>

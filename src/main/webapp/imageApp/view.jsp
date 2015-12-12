@@ -9,31 +9,33 @@
 
   <tiles:put name="title" type="string" value="Photos : ${WEB_FILE.name}" />
   
-  <tiles:put name="extraHead" value="/imageApp/extraHead.jsp" />
-  
+  <tiles:put name="extraHead" type="string">
+      <ww:styleSheet href="/templates/ntc/gidea.css" />
+  </tiles:put>
+    
   <tiles:put name="content" type="string" >
 
-    <!-- imageApp/webFriendly.jsp -->
-    
     <div class="tools">
-    
-        <ww:linkInfo href="/setDefaultImage"><ww:linkParameter name="path" value="${WEB_FILE.path}"/><ww:link title="Set as Default" ><img alt="&lt;" src="<ww:contextPath/>/imageApp/important.png" /></ww:link></ww:linkInfo>
-
-        &nbsp; &nbsp;
     
         <ww:local var="isLocal"/>
         <c:if test="${isLocal}">
-          <a id="nautilus" title="Open Nautilus ( o )" href="music:nautilus /gidea/images${WEB_FILE.encodedPath}"><img alt="&lt;" src="<ww:contextPath/>/imageApp/files.png" /></a>
-        </c:if>
 
-        &nbsp;
+          <ww:linkInfo href="/setDefaultImage"><ww:linkParameter name="path" value="${WEB_FILE.path}"/><ww:link title="Set as Default" ><img alt="!" src="<ww:contextPath/>/templates/ntc/important.png" /></ww:link></ww:linkInfo>
+
+          &nbsp; &nbsp;
+    
+          <a id="nautilus" title="Open Nautilus ( o )" href="music:nautilus /gidea/images${WEB_FILE.encodedPath}"><img alt="O" src="<ww:contextPath/>/templates/ntc/files.png" /></a>
+
+          &nbsp;
+
+        </c:if>
         
         <c:if test="${!empty WEB_FILE.previousSibling}">
         <ww:linkInfo href="/images${WEB_FILE.previousSibling.path}">
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
-            <ww:link id="previousLink" title="Previous Image ( , )"><img alt="&lt;" src="<ww:contextPath/>/imageApp/left.png" /></ww:link>
+            <ww:link id="previousLink" title="Previous Image ( , )"><img alt="&lt;" src="<ww:contextPath/>/templates/ntc/left.png" /></ww:link>
         </ww:linkInfo>
         </c:if>
         
@@ -42,7 +44,7 @@
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
-            <ww:link id="upLink" title="Parent Folder ( u )"><img alt="^" src="<ww:contextPath/>/imageApp/up.png" /></ww:link>
+            <ww:link id="upLink" title="Parent Folder ( u )"><img alt="^" src="<ww:contextPath/>/templates/ntc/up.png" /></ww:link>
         </ww:linkInfo>
         </c:if>
 
@@ -51,11 +53,9 @@
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
-            <ww:link id="nextLink" title="Next Image ( , )"><img alt="&lt;" src="<ww:contextPath/>/imageApp/right.png" /></ww:link>
+            <ww:link id="nextLink" title="Next Image ( , )"><img alt="&gt;" src="<ww:contextPath/>/templates/ntc/right.png" /></ww:link>
         </ww:linkInfo>
         </c:if>
-
-        &nbsp;
         
     </div>
     
@@ -67,32 +67,22 @@
     
     <h1><app:webPath path="${WEB_FILE.path}" action="/images" size="full"/></h1>
 
-    <div class="images">
+    <div class="viewImage">
     
         <c:choose>
           <c:when test="${WEB_FILE.svg}">
 
-            <object type="image/svg+xml" name="svgimage" data="<c:out value="${WEB_FILE.resourceLocation}"/>" width="400" height="500"></object>
+            <object type="image/svg+xml" name="svgimage" data="${WEB_FILE.url}" width="400" height="500"></object>
   
           </c:when>
           <c:otherwise>
   
-            <a id="photoLink" href="<ww:contextPath/>/image${WEB_FILE.nextSibling.encodedPath}"><img alt="photo" id="photo" src="<c:out value="http://nickthecoder.co.uk/${WEB_FILE.resourceLocation}"/>"/></a>
+            <a id="photoLink" href="<ww:contextPath/>/images${WEB_FILE.nextSibling.encodedPath}"><img alt="photo" id="photo" src="${WEB_FILE.url}"/></a>
 
           </c:otherwise>
         </c:choose>
     
     </div>
-      
-
-    <!-- {{{ wiki -->
-    <div class="apart">
-      <tiles:insert template="/pinkwino/snippet.jsp" flush="false">
-        <tiles:put name="wikiNamespace" value="image"/>
-        <tiles:put name="wikiTitle" value="${WEB_FILE.path}"/>
-    </tiles:insert>
-    </div>
-    <!-- }}} -->
       
  
   </tiles:put>

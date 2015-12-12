@@ -6,87 +6,38 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import uk.co.nickthecoder.webwidgets.util.TagUtil;
 
-/**
- * An item in the file system, which is available from the web site.
- */
 public class WebFile
 {
-
-    protected static Logger _logger = LogManager.getLogger(WebImage.class);
+    protected static Logger _logger = LogManager.getLogger(WebFile.class);
 
     private Hierarchy _hierarchy;
 
-    private String _path;
+    /**
+     * All logical paths should NOT end with a slash. This includes root, which is the empty string.
+     */
+    private String _logicalPath;
 
     private File _file;
 
     private WebDirectory _parent;
 
-    public static boolean listedExtension(File file, String[] extensions)
-    {
-        String extension = getExtension(file);
-
-        for (int i = 0; i < extensions.length; i++) {
-            if (extension.equals(extensions[i])) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static String getExtension(File file)
-    {
-        String filename = file.getName();
-        int lastDot = filename.lastIndexOf(".");
-
-        if (lastDot == -1) {
-            return "";
-        }
-
-        return filename.substring(lastDot + 1).toLowerCase();
-    }
-
-    public String removeTrailingSlash(String path)
-    {
-        if (path.endsWith("/")) {
-            return path.substring(0, path.length() - 1);
-        } else {
-            return path;
-        }
-    }
-
-    /**
-     * Changes symbol characters into the form %nn, and changes spaces to %20.
-     */
-    public static String encode(String path)
-    {
-        StringBuffer result = new StringBuffer();
-        int from = 0;
-
-        for (int i = 0; i < path.length(); i++) {
-            char c = path.charAt(i);
-
-            if ((c != '/') && !Character.isLetterOrDigit(c)) {
-                String hex = Integer.toHexString(c);
-                result.append(path.substring(from, i));
-                result.append("%").append(hex);
-                from = i + 1;
-            }
-        }
-
-        result.append(path.substring(from));
-
-        return result.toString().replaceAll(" ", "%20");
-    }
-
-    public WebFile(Hierarchy hierarchy, String path)
+    public WebFile(Hierarchy hierarchy, String logicalPath)
     {
         _hierarchy = hierarchy;
-        _path = path;
-        _file = new File(hierarchy.getRootDirectory(), path);
-        _parent = null;
+        _logicalPath = logicalPath;
+        if (_logicalPath == null) {
+            try {
+                throw new NullPointerException();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (  _logicalPath.endsWith("/") ) {
+            _logger.warn( "WebFile ends with a slash : " + _logicalPath );
+            _logicalPath = _logicalPath.substring(0, _logicalPath.length() - 1 );
+        }
     }
 
     public Hierarchy getHierarchy()
@@ -96,53 +47,60 @@ public class WebFile
 
     public File getFile()
     {
+        if (_file == null) {
+            if (_logicalPath.equals("/")) {
+                _file = _hierarchy.getRootDirectory();
+            } else {
+                _file = new File(_hierarchy.getRootDirectory(), _logicalPath);
+            }
+        }
         return _file;
     }
 
-    public String getFileURL()
+    /**
+     * Use by the special "music:" urls.
+     * @return The value of getFile(), but encoded so that it is a valid url path component.
+     */
+    public String getEncodedFile()
     {
-        return "file://" + WebFile.encode(_file.getPath());
+        return TagUtil.encodePath(getFile().toString()); 
     }
-
+    
     public String getPath()
     {
-        return _path;
+        return _logicalPath;
     }
 
     public String getEncodedPath()
     {
-        return uk.co.nickthecoder.webwidgets.util.TagUtil.encodePath(_path);
-    }
-
-    public String getResourceLocation()
-    {
-        return getHierarchy().getResourceLocation() + _path;
+        return TagUtil.encodePath(_logicalPath);
     }
 
     public String getUrl()
     {
-        return encode(getResourceLocation());
+        return getHierarchy().getRootUrl() + getEncodedPath();
     }
 
     public String getName()
     {
-        return _file.getName();
+        return getFile().getName();
     }
 
-    public String getStrippedName()
+    /**
+     * Return the name without the file extension and track numbers
+     * @return
+     */
+    public String getBaseName()
     {
-        String name = getName();
-        name = name.replaceFirst("^\\(..\\) ", "");
-        name = name.replaceFirst("\\.[^.]*$", "");
-
-        return name;
+        String name = getFile().getName();
+        int dot = name.lastIndexOf(".");
+        if ( dot > 0 ) {
+            name = name.substring(0,dot);
+        }
+        // Remove the track number of the form "(nn) " from the start of the string. 
+        return name.replaceFirst("^\\(..\\) ", "");
     }
-
-    protected void setParent(WebDirectory parent)
-    {
-        _parent = parent;
-    }
-
+    
     public List<WebDirectory> getAncestors()
     {
         List<WebDirectory> list = new ArrayList<WebDirectory>();
@@ -154,23 +112,40 @@ public class WebFile
         return list;
     }
 
+    public boolean isRoot()
+    {
+        return _logicalPath.length() == 0;
+    }
+    
+    public boolean getExists()
+    {
+        return getFile().exists();
+    }
+    
     public WebDirectory getParent()
     {
-
         if (_parent == null) {
-            if ("/".equals(getPath())) {
+            if (isRoot()) {
                 return null;
             }
-            setParent((WebDirectory) (getHierarchy().createWebFile(getParentPath())));
+            String parentPath = getParentPath();
+            if ( parentPath != null ) {
+                _parent = new WebDirectory( _hierarchy, parentPath );
+            }
         }
         return _parent;
     }
-
-    protected String getParentPath()
+    
+    void setParent( WebDirectory parent )
     {
-        int lastSlash = getPath().lastIndexOf("/", getPath().length() - 2);
-        if (lastSlash == -1) {
-            return "/";
+        _parent = parent;
+    }
+
+    public String getParentPath()
+    {
+        int lastSlash = getPath().lastIndexOf("/");
+        if (lastSlash < 1) {
+            return null;
         } else {
             return getPath().substring(0, lastSlash);
         }
@@ -185,7 +160,6 @@ public class WebFile
                 level++;
             }
         }
-
         return level;
     }
 
@@ -195,24 +169,20 @@ public class WebFile
             return false;
         }
 
-        if (obj instanceof WebFile) {
-            WebFile other = (WebFile) obj;
+        WebFile other = (WebFile) obj;
+        return (other._hierarchy == this._hierarchy) && (other._logicalPath.equals(this._logicalPath));
 
-            return (other._hierarchy.equals(this._hierarchy)) && (other._path.equals(this._path));
-        }
-
-        return false;
     }
 
     public WebFile getFirstSibling()
     {
-        return (WebFile) getParent().getLeafList().get(0);
+        return getParent().getLeafList().get(0);
     }
 
     public WebFile getLastSibling()
     {
         List<WebFile> list = getParent().getLeafList();
-        return (WebFile) list.get(list.size() - 1);
+        return list.get(list.size() - 1);
     }
 
     public WebFile getPreviousSibling()
@@ -237,4 +207,17 @@ public class WebFile
         }
     }
 
+    public boolean isFirst()
+    {
+        return this.equals(getParent().getLeafList().get(0));
+    }
+
+    public boolean isLast()
+    {
+        return this.equals(getParent().getLeafList().get(getParent().getLeafList().size() - 1));
+    }
+    public String toString()
+    {
+        return "WebFile : " + _logicalPath;
+    }
 }

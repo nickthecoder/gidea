@@ -12,7 +12,69 @@
 
   <display-name>Gidea Web Application</display-name>
 
-  <!-- New Image servlet mappings -->
+  <!-- New Crossword Solver servlet -->
+  <servlet>
+    <servlet-name>crosswordSolver</servlet-name>
+    <servlet-class>uk.co.nickthecoder.gidea.servlet.CrosswordSolverServlet</servlet-class>
+    <init-param>
+        <param-name>view.default</param-name>
+        <param-value>/games/crosswordSolver.jsp</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>crosswordSolver</servlet-name>
+    <url-pattern>/crosswordSolver</url-pattern>
+  </servlet-mapping>
+
+  
+  <!-- New music servlet -->
+  <servlet>
+    <servlet-name>music</servlet-name>
+    <servlet-class>uk.co.nickthecoder.gidea.servlet.MusicServlet</servlet-class>
+    <init-param>
+        <param-name>view.albums</param-name>
+        <param-value>/musicApp/albums.jsp</param-value>
+    </init-param>
+    <init-param>
+        <param-name>view.artists</param-name>
+        <param-value>/musicApp/artists.jsp</param-value>
+    </init-param>
+    <init-param>
+        <param-name>view.artist</param-name>
+        <param-value>/musicApp/artist.jsp</param-value>
+    </init-param>
+    <init-param>
+        <param-name>view.album</param-name>
+        <param-value>/musicApp/album.jsp</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>music</servlet-name>
+    <url-pattern>/music/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- Same servlet as above, but with different jsp view (for playing music) -->
+  <servlet>
+    <servlet-name>playMusic</servlet-name>
+    <servlet-class>uk.co.nickthecoder.gidea.servlet.MusicServlet</servlet-class>
+    <init-param>
+        <param-name>view.track</param-name>
+        <param-value>/musicApp/playTrack.jsp</param-value>
+    </init-param>
+    <init-param>
+        <param-name>view.album</param-name>
+        <param-value>/musicApp/playAlbum.jsp</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>playMusic</servlet-name>
+    <url-pattern>/playMusic/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- New images servlet -->
   <servlet>
     <servlet-name>images</servlet-name>
     <servlet-class>uk.co.nickthecoder.gidea.servlet.ImageServlet</servlet-class>
@@ -43,20 +105,8 @@
     <url-pattern>/images/*</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>image</servlet-name>
-    <servlet-class>uk.co.nickthecoder.gidea.servlet.ImageServlet</servlet-class>
-    <init-param>
-        <param-name>view.default</param-name>
-        <param-value>/imageApp/view.jsp</param-value>
-    </init-param>
-  </servlet>
 
-  <servlet-mapping>
-    <servlet-name>image</servlet-name>
-    <url-pattern>/image/*</url-pattern>
-  </servlet-mapping>
-
+  <!-- setDefaultImage servlet -->
   <servlet>
     <servlet-name>setDefaultImage</servlet-name>
     <servlet-class>uk.co.nickthecoder.gidea.servlet.SetDefaultImageServlet</servlet-class>
@@ -70,21 +120,6 @@
     <servlet-name>setDefaultImage</servlet-name>
     <url-pattern>/setDefaultImage</url-pattern>
   </servlet-mapping>
-
-  <servlet>
-    <servlet-name>imagePreviewSnippet</servlet-name>
-    <servlet-class>uk.co.nickthecoder.gidea.servlet.ImageServlet</servlet-class>
-    <init-param>
-        <param-name>view.default</param-name>
-        <param-value>/imageApp/imagePreviewSnippet.jsp</param-value>
-    </init-param>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>imagePreviewSnippet</servlet-name>
-    <url-pattern>/imagePreviewSnippet/*</url-pattern>
-  </servlet-mapping>
-
   
 
   <!-- pinkwino -->
@@ -251,6 +286,9 @@
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
 
+  <!-- End of servlets -->
+  
+  <!-- WikiServletContextListener -->
   <listener>
     <listener-class>uk.co.nickthecoder.pinkwino.WikiServletContextListener</listener-class>
   </listener>

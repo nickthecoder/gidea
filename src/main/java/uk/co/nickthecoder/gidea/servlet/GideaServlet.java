@@ -1,7 +1,6 @@
 package uk.co.nickthecoder.gidea.servlet;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,33 +23,9 @@ public class GideaServlet extends HttpServlet
         super();
     }
 
-    public String getPath(HttpServletRequest request) throws ServletException
-    {
-        String path = request.getPathInfo();
-
-        if ((path == null) || (path.length() < 2)) {
-
-            path = request.getParameter("path");
-
-        }
-
-        if (path == null) {
-            path = "/";
-        }
-
-        try {
-            path = URLDecoder.decode(path, "UTF-8");
-        } catch (Exception e) {
-            // Never
-        }
-
-        return path;
-    }
-
     protected void error(HttpServletRequest request, HttpServletResponse response, Exception e)
     {
         try {
-
             _logger.error("Unexpected exception");
             _logger.error(e);
             request.setAttribute("message", UNEXPECTED_ERROR_MESSAGE);
@@ -91,8 +66,8 @@ public class GideaServlet extends HttpServlet
         }
 
         if (page == null) {
-            _logger.debug("View type " + viewType + " not found. Falling back to the default view");
-            page = getServletConfig().getInitParameter("view.default");
+            _logger.debug("View type " + viewType + " not found.");
+            page = "/error.jsp";
         }
 
         getServletConfig().getServletContext().getRequestDispatcher(page).forward(request, response);

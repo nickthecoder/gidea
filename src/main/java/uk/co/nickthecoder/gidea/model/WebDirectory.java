@@ -3,6 +3,7 @@ package uk.co.nickthecoder.gidea.model;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class WebDirectory extends WebFile
 
     public WebDirectory(Hierarchy hierarchy, String path)
     {
-        super(hierarchy, Hierarchy.endWithSlash(path));
+        super(hierarchy, path);
 
         _children = null;
         _subDirectories = null;
@@ -27,24 +28,16 @@ public class WebDirectory extends WebFile
 
     public File getDirThumbnailFile()
     {
-        WebFile thumbnail = getHierarchy().createWebFile(getPath() + ".thumbnails/default.jpg");
+        WebFile thumbnail = new WebFile( getHierarchy(), getPath() + "/.thumbnails/default.jpg");
         return thumbnail.getFile();
     }
 
     public WebFile getDirThumbnail()
     {
-        WebFile thumbnail = getHierarchy().createWebFile(getPath() + ".thumbnails/default.jpg");
-        if (thumbnail == null) {
-            return null;
-        }
-        if (thumbnail.getFile().exists()) {
-            return thumbnail;
-        }
-
-        return null;
+        return new WebFile( getHierarchy(), getPath() + "/.thumbnails/default.jpg");
     }
 
-    protected void add(WebFile child)
+    private void addChild(WebFile child)
     {
         child.setParent(this);
 
@@ -57,22 +50,34 @@ public class WebDirectory extends WebFile
         getChildList().add(child);
     }
 
-    public void addChildren()
-    {
-        _children = new LinkedList<WebFile>();
-    }
-
-    protected void lazyChildren()
+    private void lazyChildren()
     {
         if (_children == null) {
             _children = new LinkedList<WebFile>();
             _subDirectories = new LinkedList<WebDirectory>();
             _leaves = new LinkedList<WebFile>();
 
-            getHierarchy().getWebFileCreator().createChildren(this);
-
+            File[] files = getFile().listFiles();
+            if ( files == null ) {
+                return;
+            }
+            Arrays.sort(files);
+            for (File file : files) {
+                if (file.isHidden()) {
+                    continue;
+                }
+                if (file.isDirectory()) {
+                    WebDirectory childDirectory = new WebDirectory(getHierarchy(), getPath() + "/" + file.getName());
+                    addChild(childDirectory);
+                } else {
+                    String ext = Hierarchy.getExtension(file);
+                    if (getHierarchy().isValidExtension(ext)) {
+                        WebFile child = getHierarchy().createWebFile(getPath() + "/" + file.getName());
+                        addChild(child);
+                    }
+                }
+            }
         }
-
     }
 
     public WebFile getFirst()
@@ -185,5 +190,8 @@ public class WebDirectory extends WebFile
         return (WebDirectory) list.get(index);
     }
 
+    public String toString()
+    {
+        return "WebFile : " + getPath();
+    }
 }
-

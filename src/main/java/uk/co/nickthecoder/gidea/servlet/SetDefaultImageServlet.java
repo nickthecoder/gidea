@@ -46,7 +46,7 @@ public class SetDefaultImageServlet extends ImageServlet
             }
 
             destination.getDirThumbnailFile().getParentFile().mkdir();
-            symbolicLink(((WebImage) webFile).getThumbnail().getFile(), destination.getDirThumbnailFile());
+            symbolicLink(((WebImage)webFile).getThumbnail().getFile(), destination.getDirThumbnailFile());
 
             // Redirect to the page where you can see the results of setting the
             // default image.
