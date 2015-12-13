@@ -30,3 +30,8 @@ dependencies {
     compile 'nickthecoder.co.uk:pinkwino-core:2.0'    
 }
 
+
+war {   
+    rootSpec.exclude("**/servlet-api*.jar")
+}
+
