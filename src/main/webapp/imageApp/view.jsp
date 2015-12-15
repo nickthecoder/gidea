@@ -20,7 +20,7 @@
         <ww:local var="isLocal"/>
         <c:if test="${isLocal}">
 
-          <ww:linkInfo href="/setDefaultImage"><ww:linkParameter name="path" value="${WEB_FILE.path}"/><ww:link title="Set as Default" ><img alt="!" src="<ww:contextPath/>/templates/ntc/important.png" /></ww:link></ww:linkInfo>
+          <ww:link href="/setDefaultImage/${WEB_FILE.encodedPath}" title="Set as Default" ><img alt="!" src="<ww:contextPath/>/templates/ntc/important.png" /></ww:link>
 
           &nbsp; &nbsp;
     
@@ -31,7 +31,7 @@
         </c:if>
         
         <c:if test="${!empty WEB_FILE.previousSibling}">
-        <ww:linkInfo href="/images${WEB_FILE.previousSibling.path}">
+        <ww:linkInfo href="/images${WEB_FILE.previousSibling.encodedPath}">
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
@@ -40,7 +40,7 @@
         </c:if>
         
         <c:if test="${!empty WEB_FILE.parent}">
-        <ww:linkInfo href="/images${WEB_FILE.parent.path}">
+        <ww:linkInfo href="/images${WEB_FILE.parent.encodedPath}">
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
@@ -49,7 +49,7 @@
         </c:if>
 
         <c:if test="${!empty WEB_FILE.nextSibling}">
-        <ww:linkInfo href="/images${WEB_FILE.nextSibling.path}">
+        <ww:linkInfo href="/images${WEB_FILE.nextSibling.encodedPath}">
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>

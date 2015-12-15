@@ -22,8 +22,8 @@
 
         &nbsp;
 
-        <c:if test="${!empty WEB_FILE.previousDirectory}">
-        <ww:linkInfo href="/images${WEB_FILE.previousDirectory.path}">
+        <c:if test="${WEB_FILE.previousDirectory != null}">
+        <ww:linkInfo href="/images${WEB_FILE.previousDirectory.encodedPath}">
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
@@ -31,8 +31,8 @@
         </ww:linkInfo>
         </c:if>
         
-        <c:if test="${!empty WEB_FILE.parent}">
-        <ww:linkInfo href="/images${WEB_FILE.parent.path}">
+        <c:if test="${WEB_FILE.parent != null}">
+        <ww:linkInfo href="/images${WEB_FILE.parent.encodedPath}">
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
@@ -40,8 +40,8 @@
         </ww:linkInfo>
         </c:if>
 
-        <c:if test="${!empty WEB_FILE.nextDirectory}">
-        <ww:linkInfo href="/images${WEB_FILE.nextDirectory.path}">
+        <c:if test="${WEB_FILE.nextDirectory != null}">
+        <ww:linkInfo href="/images${WEB_FILE.nextDirectory.encodedPath}">
             <c:if test="${param.size != null}">
                 <ww:linkParameter name="size" value="${param.size}"/>
             </c:if>
@@ -51,9 +51,9 @@
 
         &nbsp;
                     
-        <ww:link id="viewThumbnails" title="Thumbnails ( v t )" href="/images${WEB_FILE.path}?size=thumbnails"><img alt="thumb" src="<ww:contextPath/>/templates/ntc/thumbnails.png"/></ww:link>
-        <ww:link id="viewNormal" title="Normal Size ( v n )" href="/images${WEB_FILE.path}"><img alt="normal" src="<ww:contextPath/>/templates/ntc/normal.png"/></ww:link>
-        <ww:link id="viewFullSize" title="Full Size ( v f )" href="/images${WEB_FILE.path}?size=full"><img alt="full size" src="<ww:contextPath/>/templates/ntc/full.png"/></ww:link>
+        <ww:link id="viewThumbnails" title="Thumbnails ( v t )" href="/images${WEB_FILE.encodedPath}?size=thumbnails"><img alt="thumb" src="<ww:contextPath/>/templates/ntc/thumbnails.png"/></ww:link>
+        <ww:link id="viewNormal" title="Normal Size ( v n )" href="/images${WEB_FILE.encodedPath}"><img alt="normal" src="<ww:contextPath/>/templates/ntc/normal.png"/></ww:link>
+        <ww:link id="viewFullSize" title="Full Size ( v f )" href="/images${WEB_FILE.encodedPath}?size=full"><img alt="full size" src="<ww:contextPath/>/templates/ntc/full.png"/></ww:link>
     </div>
     
     <script><!--

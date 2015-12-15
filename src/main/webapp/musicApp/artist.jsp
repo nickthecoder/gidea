@@ -23,11 +23,11 @@
     <!-- Sub-Directories -->
     <c:forEach var="album" items="${WEB_FILE.subDirectories}">
 
-      <h2><ww:link href="/music${album.path}"><c:out value="${album.name}"/></ww:link></h2>
+      <h2><ww:link href="/music${album.encodedPath}"><c:out value="${album.name}"/></ww:link></h2>
 
       <!-- Cover -->
       <div class="albumCover">
-        <ww:link title="Click to Play" href="/playMusic${album.path}"><img
+        <ww:link title="Click to Play" href="/playMusic${album.encodedPath}"><img
             alt="cover" src="${album.url}/.meta/cover_400.jpg"
         /></ww:link>
       </div>
@@ -37,7 +37,7 @@
           <ol>
               <c:forEach var="track" items="${album.leaves}" >
               <li>
-                    <a title="Queue Track" href="music:queue /gidea/music/categories<c:out value="${track.path}"/>"><g:formattedName name="${track.baseName}" /></a>
+                    <a title="Queue Track" href="music:queue /gidea/music/categories<c:out value="${track.encodedPath}"/>"><g:formattedName name="${track.baseName}" /></a>
               </li>
               </c:forEach>
           </ol>

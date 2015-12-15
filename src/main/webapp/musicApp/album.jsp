@@ -24,7 +24,7 @@
 
       <!-- Cover -->
       <div class="albumCover">
-        <ww:link title="Click to Play" href="/playMusic${WEB_FILE.path}"><img
+        <ww:link title="Click to Play" href="/playMusic${WEB_FILE.encodedPath}"><img
             alt="cover" src="${WEB_FILE.url}/.meta/cover_400.jpg"
         /></ww:link>
       </div>
@@ -34,7 +34,7 @@
           <ol>
               <c:forEach var="track" items="${WEB_FILE.leaves}" >
               <li>
-                    <a title="Queue Track" href="music:queue /gidea/music/categories<c:out value="${track.path}"/>"><g:formattedName name="${track.baseName}" /></a>
+                    <a title="Queue Track" href="music:queue /gidea/music/categories<c:out value="${track.encodedPath}"/>"><g:formattedName name="${track.baseName}" /></a>
               </li>
               </c:forEach>
           </ol>

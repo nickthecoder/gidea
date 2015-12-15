@@ -28,7 +28,7 @@
         <p>
             <select name="destination">
               <c:forEach var="ancestor" items="${WEB_FILE.ancestors}">
-                 <option value="${ancestor.path}">${ancestor.path}</option>
+                 <option value="${ancestor.path}"><c:out value="${ancestor.path}"/></option>
               </c:forEach>
             </select>
         </p>

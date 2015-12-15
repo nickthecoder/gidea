@@ -151,7 +151,7 @@ public class WebFile
     {
         int lastSlash = getPath().lastIndexOf("/");
         if (lastSlash < 1) {
-            return null;
+            return "";
         } else {
             return getPath().substring(0, lastSlash);
         }

@@ -19,7 +19,7 @@
     <div class="aboveHeading">
       <ul class="wiki_infoList">
         <c:forEach var="category" items="${WEB_FILE.hierarchy.root.subDirectories}" >
-          <li><ww:link href="/music${category.path}"><c:out value="${category.name}"/></ww:link></li>
+          <li><ww:link href="/music${category.encodedPath}"><c:out value="${category.name}"/></ww:link></li>
         </c:forEach>
       </ul>
     </div>

@@ -59,18 +59,18 @@
 
           <c:forEach var="artist" items="${letter.items}">
           <div class="artist">
-              <h3><ww:link href="/music${artist.path}"><c:out value="${artist.name}" default="" /></ww:link></h3>
+              <h3><ww:link href="/music${artist.encodedPath}"><c:out value="${artist.name}" default="" /></ww:link></h3>
 
               <div class="thumbnails">
               <c:forEach var="album" items="${artist.children}">
                 <div class="thumbnailBox">
                   <div class="thumbnailContainer"><div class="thumbnailWrapper">
-                    <ww:link title="Click to Play" href="/playMusic${album.path}"><img
+                    <ww:link title="Click to Play" href="/playMusic${album.encodedPath}"><img
                       alt="cover" src="${album.url}/.meta/cover_100.jpg"
                     /></ww:link><br/>
                   </div></div>
                   <div class="thumbnailLabel">
-                    <ww:link title="View Album" href="/music${album.path}"><c:out value="${album.name}"/></ww:link>
+                    <ww:link title="View Album" href="/music${album.encodedPath}"><c:out value="${album.name}"/></ww:link>
                   </div>
                 </div>
               </c:forEach>
