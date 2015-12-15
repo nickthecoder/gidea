@@ -40,7 +40,15 @@ public abstract class WebFileServlet extends GideaServlet
             // Remove parameters (such as jsessionid), which use semi-colon
             // Note that regular parameters, using ?foo=bar format are NOT in
             // uri, so no need to remove them.
-            path = path.replaceAll(";.*", "");
+            
+            // Ahhhh!!!!eleventy!11!
+            // Despite the fact that I am ESCAPING the ";" as %3B, in my production environment, it has been
+            // UNESCAPED, so I cannot tell the difference between a ";" and "%3B".
+            // So, alas the best I can do is ignore them
+            // (I'm not using them, and my apache config strips out the ;jsessionsid stuff).
+            //
+            //path = path.replaceAll(";.*", "");
+            
             try {
                 return URLDecoder.decode(path, "UTF-8");
             } catch (Exception e) {
