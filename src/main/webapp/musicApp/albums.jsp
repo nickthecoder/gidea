@@ -18,7 +18,7 @@
 
         &nbsp;
 
-        <ww:link title="Artists, No Albums" href="/music${WEB_FILE.encodedPath}"><img alt="" src="<ww:contextPath/>/templates/ntc/summary.png" /></ww:link>
+        <ww:link title="Artists, No Albums" href="/music${WEB_FILE.encodedPath}?view=artists"><img alt="" src="<ww:contextPath/>/templates/ntc/summary.png" /></ww:link>
     </div>
 
     <h1>Artists</h1>
