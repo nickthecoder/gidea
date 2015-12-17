@@ -58,7 +58,7 @@ public class MusicServlet extends WebFileServlet
             if (webFile.getLevel() == 1) {
                 String view = request.getParameter("view");
                 // Can be artist (the default), albums or catalogue??? 
-                return view == null ? "artists" : view;
+                return view == null ? "albums" : view;
                 
             } else if (webFile.getLevel() == 2) {
                 return "artist";
