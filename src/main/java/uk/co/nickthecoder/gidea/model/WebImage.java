@@ -62,6 +62,7 @@ public class WebImage extends WebFile
 
     public WebFile getThumbnail()
     {
+        _logger.trace("Getting thumbnail WebFile for " + this.getName());
         WebFile thumbnail = getHierarchy().createWebFile(
                         getParent().getPath() + "/" + THUMBNAIL_DIRECTORY + "/" + getThumbnailName());
 
@@ -85,43 +86,37 @@ public class WebImage extends WebFile
 
     public boolean getThumbnailComplete()
     {
+        File full = getFile();
+        File thumbnail = getThumbnail().getFile();
+        File thumbDir = thumbnail.getParentFile();
         try {
-            File full = getFile();
-            File thumbnail = getThumbnail().getFile();
-            File thumbDir = thumbnail.getParentFile();
-            try {
-                thumbDir.mkdirs();
-            } catch (Exception e) {
-                _logger.error("Failed to create thumbnail directory : " + thumbDir);
-            }
-
-            if (thumbDir.exists()) {
-                if ((!thumbnail.exists()) || (thumbnail.lastModified() < full.lastModified())) {
-
-                    if (!_thumbnailQueued) {
-
-                        _logger.info("Thumbnail creation to be queued : " + getPath());
-
-                        ResizeImage resizer = new ResizeImage(full.getPath(), thumbnail.getPath());
-                        getImageJobQueue().add(resizer);
-                        _thumbnailQueued = true;
-                    }
-
-                } else {
-                    // Thumbnail is up to date
-                    // _logger.info( "Thumbnail up to date " + getPath() );
-                    return true;
-                }
-            }
-
-            return false;
-
-        } catch (RuntimeException e) {
-            _logger.error("Failed to render thumbnail for " + getPath());
-            e.printStackTrace();
-            // return false;
-            throw e;
+            _logger.trace("Creating thumbnail dir");
+            thumbDir.mkdirs();
+        } catch (Exception e) {
+            _logger.error("Failed to create thumbnail directory : " + thumbDir);
         }
+
+        if (thumbDir.exists()) {
+            if ((!thumbnail.exists()) || (thumbnail.lastModified() < full.lastModified())) {
+
+                if (!_thumbnailQueued) {
+                    _logger.info("Queueing thumbnail creation");
+                    ResizeImage resizer = new ResizeImage(full.getPath(), thumbnail.getPath());
+                    getImageJobQueue().add(resizer);
+                    _thumbnailQueued = true;
+                } else {
+                    _logger.info("Thumbnail already queued");
+                }
+
+            } else {
+                _logger.trace("Thumbnail is up to date");
+                return true;
+            }
+        } else {
+            _logger.warn("Thumbnail dir does not exist");
+        }
+
+        return false;
 
     }
 
@@ -138,14 +133,12 @@ public class WebImage extends WebFile
         try {
             quickDir.mkdir();
         } catch (Exception e) {
+            _logger.error("Failed to create quick directory : " + quickDir);
         }
 
         if (quickDir.exists()) {
             if ((!quick.exists()) || (quick.lastModified() < full.lastModified())) {
                 if (quick.exists() || (!_quickQueued)) {
-                    // ThumbnailMaker maker = new ThumbnailMaker(
-                    // full.getPath(), quick.getPath(), QUICK_WIDTH,
-                    // QUICK_HEIGHT );
                     ResizeImage resizer = new ResizeImage(full.getPath(), quick.getPath(), QUICK_WIDTH, QUICK_HEIGHT);
                     getImageJobQueue().add(resizer);
                 }

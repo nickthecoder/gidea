@@ -5,17 +5,18 @@
 <%@ taglib uri="http://nickthecoder.co.uk/webwidgets" prefix="ww" %>
 <%@ taglib uri="http://nickthecoder.co.uk/gidea" prefix="app" %>
 
-<ww:pager items="${WEB_FILE.leaves}" itemsPerPage="16" subsetVar="subset" pagerVar="pager">
 <tiles:insert template="imageTemplate.jsp">
 
   <tiles:put name="images" type="string">
   <div class="thumbnails">
 
-    <c:forEach var="leaf" items="${subset}">
+    <c:forEach var="leaf" items="${WEB_FILE.leaves}">
       <ww:linkInfo href="/images${leaf.encodedPath}">
 
         <div class="thumbnailBox">
           <div class="thumbnailContainer"><div class="thumbnailWrapper">
+            <c:if test="${leaf.thumbnailComplete}">
+            </c:if>
             <ww:link><img class="thumbnail" alt="" src="${leaf.thumbnail.url}"/></ww:link>
           </div></div>
           <div class="thumbnailLabel">
@@ -30,5 +31,4 @@
   </tiles:put>
     
 </tiles:insert>
-</ww:pager>
 

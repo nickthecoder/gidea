@@ -117,7 +117,7 @@
 
   <servlet-mapping>
     <servlet-name>setDefaultImage</servlet-name>
-    <url-pattern>/setDefaultImage</url-pattern>
+    <url-pattern>/setDefaultImage/*</url-pattern>
   </servlet-mapping>
   
 

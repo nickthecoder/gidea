@@ -20,7 +20,7 @@
         <ww:local var="isLocal"/>
         <c:if test="${isLocal}">
 
-          <ww:link href="/setDefaultImage/${WEB_FILE.encodedPath}" title="Set as Default" ><img alt="!" src="<ww:contextPath/>/templates/ntc/important.png" /></ww:link>
+          <ww:link href="/setDefaultImage${WEB_FILE.encodedPath}" title="Set as Default" ><img alt="!" src="<ww:contextPath/>/templates/ntc/important.png" /></ww:link>
 
           &nbsp; &nbsp;
     

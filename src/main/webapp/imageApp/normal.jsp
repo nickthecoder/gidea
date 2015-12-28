@@ -12,6 +12,9 @@
   <div class="images">
 
     <c:forEach var="leaf" items="${subset}">
+      <c:if test="${leaf.quickComplete}">
+      </c:if>
+    
       <ww:linkInfo href="/images${leaf.encodedPath}">
             
         <div class="imageContainer">
